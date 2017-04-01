@@ -1,4 +1,4 @@
-#!/usr/bin/python2.7
+#!/usr/bin/python
 
 import time
 import schedule
@@ -8,7 +8,8 @@ import email
 import pickle
 import notify2
 import pandas
-from pickle_manipulations import get_ID, update_ID
+from pickle_manipulations import get_EmailID,get_InboxID,get_Password,update_InboxID
+
 
 def job():
 
@@ -16,11 +17,8 @@ def job():
     smtp_server = "imap.gmail.com"
     smtp_port = 993
 
-    # username = raw_input("Enter username : ")
-    # password = raw_input("Enter password : ")
-
-    username = "username"
-    password = "password"
+    username = get_EmailID()
+    password = get_Password()
 
     mail = imaplib.IMAP4_SSL(smtp_server)
 
@@ -31,7 +29,7 @@ def job():
     mail_ids = data[0]
     id_list = mail_ids.split()
 
-    pickle_ID = get_ID()
+    pickle_ID = get_InboxID()
     first_id = int(id_list[0])
     last_id = int(id_list[-1])
 
@@ -42,14 +40,17 @@ def job():
 
     if diff == 0:
         message = "No new mails."
+
+        print message
+
         notify2.init("Gmail Notifier")
         n = notify2.Notification("Gmail Inbox", message)
         n.show()
 
-        print message
-
     elif diff == 1:
         message = "You have 1 new mail "
+
+        print message
 
         l = []
 
@@ -65,13 +66,13 @@ def job():
         n = notify2.Notification("Gmail Inbox", message + "\n" + str(l))
         n.show()
 
-        update_ID(last_id)
-
-        print str(l)
+        update_InboxID(last_id)
 
     else:
         message = "You have " + str(diff) + " new mails."
 
+        print message
+
         l = []
 
         for i in range(last_id, pickle_ID, -1):
@@ -86,13 +87,13 @@ def job():
         n = notify2.Notification("Gmail Inbox", message + "\n" + str(l))
         n.show()
 
-        print str(l)
+        update_InboxID(last_id)
 
-        update_ID(last_id)
+job()
 
-schedule.every(1).minutes.do(job)
-
-while True:
-    schedule.run_pending()
-    time.sleep(1)
+# schedule.every(1).minutes.do(job)
+#
+# while True:
+#     schedule.run_pending()
+#     time.sleep(1)
 

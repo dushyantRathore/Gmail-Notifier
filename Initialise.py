@@ -12,11 +12,8 @@ def startup():
     smtp_server = "imap.gmail.com"
     smtp_port = 993
 
-    # username = raw_input("Enter username : ")
-    # password = raw_input("Enter password : ")
-
-    username = "username"
-    password = "password"
+    username = raw_input("Enter username : ")
+    password = raw_input("Enter password : ")
 
     mail = imaplib.IMAP4_SSL(smtp_server)
 
@@ -30,8 +27,14 @@ def startup():
     first_id = int(id_list[0])
     last_id = int(id_list[-1])
 
-    fileobject = open('ID.txt', 'w')
-    pickle.dump(last_id, fileobject)
+    fileobject1 = open('EmailID.txt', 'w')
+    pickle.dump(username, fileobject1)
+
+    fileobject2 = open('Password.txt', 'w')
+    pickle.dump(password, fileobject2)
+
+    fileobject3 = open('InboxID.txt', 'w')
+    pickle.dump(last_id, fileobject3)
 
 
 startup()
