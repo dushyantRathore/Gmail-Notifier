@@ -3,6 +3,20 @@ import imaplib
 import email
 import pickle
 
+
+class color:
+   PURPLE = '\033[95m'
+   CYAN = '\033[96m'
+   DARKCYAN = '\033[36m'
+   BLUE = '\033[94m'
+   GREEN = '\033[92m'
+   YELLOW = '\033[93m'
+   RED = '\033[91m'
+   BOLD = '\033[1m'
+   UNDERLINE = '\033[4m'
+   END = '\033[0m'
+
+
 # Initialisation Function
 
 
@@ -12,8 +26,8 @@ def startup():
     smtp_server = "imap.gmail.com"
     smtp_port = 993
 
-    username = raw_input("Enter username : ")
-    password = raw_input("Enter password : ")
+    username = raw_input(color.BOLD + color.CYAN + "Enter username : " + color.END)
+    password = raw_input(color.BOLD + color.CYAN + "Enter password : " + color.END)
 
     mail = imaplib.IMAP4_SSL(smtp_server)
 
@@ -37,4 +51,5 @@ def startup():
     pickle.dump(last_id, fileobject3)
 
 
-startup()
+if __name__ == "__main__":
+    startup()
