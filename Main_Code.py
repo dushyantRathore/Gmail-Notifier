@@ -1,13 +1,8 @@
 #!/usr/bin/python
 
-import time
-import schedule
-import smtplib
 import imaplib
 import email
-import pickle
 import notify2
-import pandas
 from pickle_manipulations import get_EmailID,get_InboxID,get_Password,update_InboxID
 
 
