@@ -52,7 +52,7 @@ def job():
 
         print message
 
-        l = []
+        l = ""
 
         for i in range(last_id, pickle_ID, -1):
             typ, data = mail.fetch(i, '(RFC822)')
@@ -60,7 +60,7 @@ def job():
             for response in data:
                 if isinstance(response, tuple):
                     msg = email.message_from_string(response[1])
-                    l.append(msg['from'] + " - " + msg['subject'])
+                    l += "-> " + msg['from'] + " - " + msg['subject'] + "\n"
 
         notify2.init("Gmail Notifier")
         n = notify2.Notification("Gmail Inbox", message + "\n" + str(l))
@@ -73,7 +73,7 @@ def job():
 
         print message
 
-        l = []
+        l = ""
 
         for i in range(last_id, pickle_ID, -1):
             typ, data = mail.fetch(i, '(RFC822)')
@@ -81,7 +81,7 @@ def job():
             for response in data:
                 if isinstance(response, tuple):
                     msg = email.message_from_string(response[1])
-                    l.append(msg['from'] + " - " + msg['subject'])
+                    l += "-> " + msg['from'] + " - " + msg['subject'] + "\n"
 
         notify2.init("Gmail Notifier")
         n = notify2.Notification("Gmail Inbox", message + "\n" + str(l))
@@ -89,11 +89,7 @@ def job():
 
         update_InboxID(last_id)
 
-job()
+if __name__ == "__main__":
+    job()
 
-# schedule.every(1).minutes.do(job)
-#
-# while True:
-#     schedule.run_pending()
-#     time.sleep(1)
 
