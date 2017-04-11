@@ -2,54 +2,74 @@ import smtplib
 import imaplib
 import email
 import pickle
-
-
-class color:
-   PURPLE = '\033[95m'
-   CYAN = '\033[96m'
-   DARKCYAN = '\033[36m'
-   BLUE = '\033[94m'
-   GREEN = '\033[92m'
-   YELLOW = '\033[93m'
-   RED = '\033[91m'
-   BOLD = '\033[1m'
-   UNDERLINE = '\033[4m'
-   END = '\033[0m'
+from Tkinter import *
 
 
 # Initialisation Function
 
 
-def startup():
+class initialise():
 
-    org_email = "@gmail.com"
-    smtp_server = "imap.gmail.com"
-    smtp_port = 993
+    def __init__(self):
+        self.root = Tk()
+        self.root.title("Gmail Notifier")
+        self.mainframe = Frame(self.root, padx=10, pady=10)
+        self.label1 = Label(self.mainframe, text="Enter your username : ")
+        self.label1.config(font=("Arial", 18))
+        self.entry1 = Entry(self.mainframe, width=25)
+        self.entry1.config(font=("Arial", 18))
+        self.label2 = Label(self.mainframe, text="Enter your password : ")
+        self.label2.config(font=("Arial", 18))
+        self.entry2 = Entry(self.mainframe, width=25)
+        self.entry2.config(font=("Arial", 18))
 
-    username = raw_input(color.BOLD + color.CYAN + "Enter username : " + color.END)
-    password = raw_input(color.BOLD + color.CYAN + "Enter password : " + color.END)
+        self.button1 = Button(self.mainframe, text="Register", command=self.register)
+        self.button1.config(font=("Arial", 18))
 
-    mail = imaplib.IMAP4_SSL(smtp_server)
+        # Grid Packing
 
-    mail.login(username, password)
-    mail.select('inbox')
+        self.label1.grid(row=0, sticky=E)
+        self.entry1.grid(row=0, column=1)
+        self.label2.grid(row=1, sticky=E)
+        self.entry2.grid(row=1,column=1)
+        self.button1.grid(row=2,column=0,columnspan=2)
 
-    type, data = mail.search(None, 'ALL')
-    mail_ids = data[0]
-    id_list = mail_ids.split()
+        self.mainframe.pack()
 
-    first_id = int(id_list[0])
-    last_id = int(id_list[-1])
+        self.root.mainloop()
 
-    fileobject1 = open('EmailID.txt', 'w')
-    pickle.dump(username, fileobject1)
+    def register(self):
 
-    fileobject2 = open('Password.txt', 'w')
-    pickle.dump(password, fileobject2)
+        username = self.entry1.get()
+        password = self.entry2.get()
 
-    fileobject3 = open('InboxID.txt', 'w')
-    pickle.dump(last_id, fileobject3)
+        # print username
+        # print password
 
+        org_email = "@gmail.com"
+        smtp_server = "imap.gmail.com"
+        smtp_port = 993
+
+        mail = imaplib.IMAP4_SSL(smtp_server)
+
+        mail.login(username, password)
+        mail.select('inbox')
+
+        type, data = mail.search(None, 'ALL')
+        mail_ids = data[0]
+        id_list = mail_ids.split()
+
+        first_id = int(id_list[0])
+        last_id = int(id_list[-1])
+
+        fileobject1 = open('EmailID.txt', 'w')
+        pickle.dump(username, fileobject1)
+
+        fileobject2 = open('Password.txt', 'w')
+        pickle.dump(password, fileobject2)
+
+        fileobject3 = open('InboxID.txt', 'w')
+        pickle.dump(last_id, fileobject3)
 
 if __name__ == "__main__":
-    startup()
+    initialise()
