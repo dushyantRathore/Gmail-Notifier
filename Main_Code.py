@@ -25,7 +25,6 @@ def job():
     id_list = mail_ids.split()
 
     pickle_ID = get_InboxID()
-    first_id = int(id_list[0])
     last_id = int(id_list[-1])
 
     # print pickle_ID
