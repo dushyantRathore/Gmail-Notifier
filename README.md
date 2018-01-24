@@ -8,5 +8,5 @@ Notification tool for Gmail Inbox
 4) Run `Main_Code.py` to check inbox for updates. It can also be made a **cronjob**.
 <br><br>
 **Screenshots**
-<br>
-![Login GUI](Screenshots/1.png)
+<br><br>
+![Login GUI](https://imgur.com/zofJyhO)
