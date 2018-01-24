@@ -9,4 +9,4 @@ Notification tool for Gmail Inbox
 <br><br>
 **Screenshots**
 <br>
-![Login GUI](https://github.com/dushyantRathore/Gmail-Notifier/blob/master/Screenshots/1.png)
+![Login GUI](Screenshots/1.png)
